@@ -1,0 +1,459 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root,
+[data-theme='light'] {
+  --color-primary: #0F172A;
+  --color-primary-dark: #020617;
+  --color-accent: #14B8A6;
+  --color-accent-hover: #0D9488;
+  --color-accent-light: #CCFBF1;
+  --color-tertiary: #dec29a;
+
+  --color-bg: #F8FAFC;
+  --color-surface: #ffffff;
+  --color-surface-low: #f1f5f9;
+  --color-surface-high: #e2e8f0;
+  --color-surface-highest: #cbd5e1;
+  --color-on-surface: #0f172a;
+  --color-on-surface-variant: #475569;
+  --color-outline-variant: #e2e8f0;
+  --color-outline: #94a3b8;
+}
+
+[data-theme='dark'] {
+  --color-primary: #ffffff;
+  --color-primary-dark: #000000;
+  --color-accent: #14B8A6;
+  --color-accent-hover: #0D9488;
+  --color-accent-light: #115E59;
+  --color-tertiary: #dec29a;
+
+  --color-bg: #131315;
+  --color-surface: #1f1f21;
+  --color-surface-low: #1b1b1d;
+  --color-surface-high: #2a2a2b;
+  --color-surface-highest: #353436;
+  --color-on-surface: #e4e2e4;
+  --color-on-surface-variant: #c6c6cd;
+  --color-outline-variant: #45464d;
+  --color-outline: #909097;
+}
+
+html[data-theme='light'] {
+  background-color: #F8FAFC !important;
+}
+
+[data-theme='light'] body {
+  background-color: #F8FAFC !important;
+  color: #1E293B !important;
+}
+
+html[data-theme='dark'] {
+  background-color: #131315 !important;
+}
+
+[data-theme='dark'] body {
+  background-color: #131315 !important;
+  color: #e4e2e4 !important;
+}
+
+[data-theme='dark'] body::before {
+  display: none !important;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    background-color: #F8FAFC;
+  }
+
+  body {
+    color: #334155;
+    position: relative;
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: #ffffff;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('/dashboard_bg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.7;
+    /* 70% visibility */
+    z-index: -10;
+    pointer-events: none;
+  }
+
+}
+
+@layer utilities {
+  .bg-eka-gradient {
+    background-image: radial-gradient(50.1% 95.24% at 50% 96.03%, #3F7FFF 22.6%, #9D09FF 86.06%);
+  }
+
+  .text-eka-gradient {
+    background-image: radial-gradient(50.1% 95.24% at 50% 96.03%, #3F7FFF 22.6%, #9D09FF 86.06%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* Premium Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #94a3b8;
+}
+
+/* Clean Cards layout and animation utilities */
+.card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+  transform: translateY(-2px);
+}
+
+/* Alarm animations */
+@keyframes bell-shake {
+
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+
+  15% {
+    transform: rotate(15deg);
+  }
+
+  30% {
+    transform: rotate(-15deg);
+  }
+
+  45% {
+    transform: rotate(10deg);
+  }
+
+  60% {
+    transform: rotate(-10deg);
+  }
+
+  75% {
+    transform: rotate(4deg);
+  }
+
+  85% {
+    transform: rotate(-4deg);
+  }
+}
+
+.animate-bell-shake {
+  animation: bell-shake 1.5s infinite;
+  transform-origin: top center;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.3;
+  }
+
+  50% {
+    transform: scale(1.2);
+    opacity: 0.6;
+  }
+
+  100% {
+    transform: scale(0.9);
+    opacity: 0.3;
+  }
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 2s infinite ease-in-out;
+}
+
+/* Custom styles for printing the emergency card */
+@media print {
+
+  /* Hide the rest of the page completely */
+  aside,
+  main,
+  nav,
+  header,
+  .flex-1 {
+    display: none !important;
+  }
+
+  body {
+    background: none !important;
+    background-color: #ffffff !important;
+  }
+
+  /* Make overlay span the printed sheet without background shadows */
+  .print-overlay {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+    box-shadow: none !important;
+  }
+
+  /* Center the card and remove standard box shadows */
+  .emergency-card-to-print {
+    box-shadow: none !important;
+    border: 2px solid #dc2626 !important;
+    /* Keep red borders */
+    margin: 40px auto !important;
+    width: 100% !important;
+    max-width: 480px !important;
+    page-break-inside: avoid !important;
+    visibility: visible !important;
+    position: relative !important;
+    color: #000000 !important;
+  }
+
+  /* Ensure background colors are printed by modern browsers */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Hide print buttons and Close buttons */
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* Animation Polish: Fade & Slide Up, Floating Background, Shimmers */
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-slide-up {
+  animation: fadeSlideUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes floatSlow {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-8px) rotate(3deg);
+  }
+
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}
+
+.animate-float {
+  animation: floatSlow 7s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: floatSlow 10s ease-in-out infinite;
+}
+
+.animate-float-slower {
+  animation: floatSlow 14s ease-in-out infinite;
+}
+
+@keyframes skeletonShimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-pulse {
+  background: linear-gradient(90deg, #1b1b1d 25%, #2a2a2b 50%, #1b1b1d 75%);
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.6s infinite linear;
+}
+
+[data-theme='eka'] .skeleton-pulse {
+  background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.6s infinite linear;
+}
+
+/* Stagger Animation Delays */
+.stagger-1 {
+  animation-delay: 40ms !important;
+}
+
+.stagger-2 {
+  animation-delay: 80ms !important;
+}
+
+.stagger-3 {
+  animation-delay: 120ms !important;
+}
+
+.stagger-4 {
+  animation-delay: 160ms !important;
+}
+
+.stagger-5 {
+  animation-delay: 200ms !important;
+}
+
+/* Interactive Card Lifts */
+.hover-lift {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 20px -8px rgba(0, 0, 0, 0.3);
+}
+
+/* Success Checkmark drawing animation */
+@keyframes checkmarkDraw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.checkmark-circle {
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  stroke-width: 2;
+  stroke-miterlimit: 10;
+  stroke: #14B8A6;
+  /* Matches Teal accent */
+  fill: none;
+  animation: checkmarkDraw 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.checkmark-kick {
+  transform-origin: 50% 50%;
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  animation: checkmarkDraw 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.6s forwards;
+}
+
+/* Animation Polish: Fade & Slide Up, Floating Background, Shimmers */
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-slide-up {
+  animation: fadeSlideUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes floatSlow {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-8px) rotate(3deg);
+  }
+
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}
+
+.animate-float {
+  animation: floatSlow 7s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: floatSlow 10s ease-in-out infinite;
+}
+
+.animate-float-slower {
+  animation: floatSlow 14s ease-in-out infinite;
+}
+
+@keyframes skeletonShimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-pulse {
+  background: linear-gradient(90deg, #1b1b1d 25%, #2a2a2b 50%, #1b1b1d 75%);
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.6s infinite linear;
+}
+
+[data-theme='eka'] .skeleton-pulse {
+  background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.6s infinite linear;
+}
