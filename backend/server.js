@@ -52,21 +52,30 @@ const authLimiter = rateLimit({
 
 // Middleware
 const allowedOrigins = [
-  process.env.FRONTEND_URL || 'http://localhost:5173',
+  'https://health-vault-pied.vercel.app',
+  process.env.FRONTEND_URL,
   'http://localhost:5173',
   'http://localhost:3000',
-];
-app.use(cors({
+].filter(Boolean); // Remove any undefined/null values
+
+const corsOptions = {
   origin: function (origin, callback) {
-    // Allow requests with no origin (mobile apps, curl, etc.)
+    // Allow requests with no origin (mobile apps, curl, Postman, etc.)
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
       callback(new Error('CORS: Not allowed by policy - ' + origin));
     }
   },
-  credentials: true
-}));
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
+
+app.use(cors(corsOptions));
+
+// Handle preflight OPTIONS requests for all routes
+app.options('*', cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
